@@ -12,6 +12,10 @@ let AppService = class AppService {
     getHello() {
         return "Hello World!";
     }
+    getServerResponse(name) {
+        const random = Math.random();
+        return name + random;
+    }
 };
 exports.AppService = AppService;
 exports.AppService = AppService = __decorate([
