@@ -1,3 +1,5 @@
+import { roleType } from "../dto/create-user.dto";
+
 export class UserEntity {
   id: string;
   fistName: string;
@@ -10,7 +12,7 @@ export class UserEntity {
   fistName: string,
   lastName: string,
   email: string,
-  role: string,
+  role: roleType,
   password: string,) {
     this.id = id;
     this.fistName = fistName ?? ''

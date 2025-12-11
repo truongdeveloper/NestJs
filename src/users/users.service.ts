@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { usersData } from "./data/user";
 import { UserEntity } from "./data/user.entity";
+import { UserQueryDTO } from "./dto/user-query.dto";
 
 @Injectable()
 export class UsersService {
@@ -14,7 +15,7 @@ export class UsersService {
     return true;
   }
 
-  findAll(query: {page: number, limit: number}) {
+  findAll(query: UserQueryDTO) {
     const index = query.page * query.limit;
     return {data: this.data.slice(index,index + query.limit), total: this.data.length}
   }
