@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { usersData } from "./data/user";
 import { UserEntity } from "./data/user.entity";
 import { UserQueryDTO } from "./dto/user-query.dto";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class UsersService {
@@ -12,7 +13,7 @@ export class UsersService {
     const id = crypto.randomUUID();
     const user = this.mapUser(createUserDto, id);
     this.data.push(user)
-    return true;
+    return user;
   }
 
   findAll(query: UserQueryDTO) {

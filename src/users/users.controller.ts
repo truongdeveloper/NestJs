@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ValidationPipe } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserQueryDTO } from './dto/user-query.dto';
+import { UsersDatabaseService } from './users-database.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersDatabaseService) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -12,9 +13,7 @@ export class UsersController {
   }
 
   @Get()
-  findAll(@Query() query: {page: number, limit: number}) {
-    query.page = query.page ?? 0;
-    query.limit = query.limit ?? 10;
+  findAll(@Query() query: UserQueryDTO) {
     return this.usersService.findAll(query);
   }
 

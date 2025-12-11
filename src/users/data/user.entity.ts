@@ -1,11 +1,21 @@
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { roleType } from "../dto/create-user.dto";
 
+@Entity()
 export class UserEntity {
+
+  @PrimaryGeneratedColumn()
   id: string;
+
+  @Column('text')
   fistName: string;
+  @Column('text')
   lastName: string;
+  @Column('text')
   email: string;
+  @Column('text')
   role: string;
+  @Column('text')
   password: string;
 
   constructor(  id: string,

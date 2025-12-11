@@ -1,5 +1,3 @@
- 
-
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { CallHandler, ExecutionContext, NestInterceptor } from "@nestjs/common";
 import { ValidationError } from "class-validator";
@@ -18,7 +16,7 @@ export class ResponseTransformInterceptor implements NestInterceptor {
     return next.handle().pipe(
       map((data) => {
         return { ok: 1, d: data, e: null };
-      }),
+      })
     );
   }
 }
