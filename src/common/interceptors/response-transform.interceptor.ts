@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { CallHandler, ExecutionContext, NestInterceptor } from "@nestjs/common";
-import { ValidationError } from "class-validator";
-import { catchError, map, Observable, of } from "rxjs";
+import { map, Observable } from "rxjs";
 
 interface Response {
   ok: number;

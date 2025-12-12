@@ -3,9 +3,10 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
 import { UsersModule } from "./users/users.module";
+import { WebSocketModule } from "./websocket/websocket.module";
 
 @Module({
-  imports: [ConfigModule.forRoot(), UsersModule],
+  imports: [ConfigModule.forRoot(), UsersModule, WebSocketModule],
   controllers: [AppController],
   providers: [AppService],
 })
