@@ -1,26 +1,39 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
-import { usersData } from "./data/user";
-import { UserEntity } from "./data/user.entity";
+import { usersData } from "./entity/user";
+import { UserEntity } from "./entity/user.entity";
 import { UserQueryDTO } from "./dto/user-query.dto";
 import { Repository } from "typeorm";
+import { PasswordService } from "src/auth/password.service";
 
 @Injectable()
 export class UsersDatabaseService {
   constructor(
     @Inject("USER_REPOSITORY")
-    private userRepository: Repository<UserEntity>
+    private userRepository: Repository<UserEntity>,
+    private passwordService: PasswordService
   ) {}
 
   private data = usersData;
   async create(createUserDto: CreateUserDto) {
-    try {
-      await this.userRepository.save(createUserDto);
-    } catch (error) {
-      return false;
+    const user = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.email = :email", { email: createUserDto.email })
+      .getOne();
+    if (user) {
+      throw new ConflictException("User is Exist");
     }
-
+    createUserDto.password = await this.passwordService.hashPassword(
+      createUserDto.password
+    );
+    console.log(createUserDto.password)
+    await this.userRepository.save(createUserDto);
     return true;
   }
 
@@ -47,16 +60,36 @@ export class UsersDatabaseService {
 
   async findOne(id: string) {
     try {
-      return await this.userRepository
+      const user = await this.userRepository
         .createQueryBuilder("user")
         .where("user.id = :id", { id: id })
+        .getOne();
+      if (user) {
+        const { password, ...result } = user;
+        return result;
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async findByEmail(email: string) {
+    try {
+      return await this.userRepository
+        .createQueryBuilder("user")
+        .where("user.email = :email", { email: email })
         .getOne();
     } catch (error) {
       return error;
     }
   }
 
-  async update(id: string, updateUserDto: CreateUserDto) {
+  async update(
+    id: string,
+    updateUserDto:
+      | Omit<CreateUserDto, "password" | "id">
+      | { refreshToken?: string }
+  ) {
     const result = await this.userRepository.update(id, updateUserDto);
     if (result.affected === 0) {
       throw new NotFoundException("User not found");

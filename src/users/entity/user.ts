@@ -8,6 +8,7 @@ export const usersData: UserEntity[] = [
     email: "vanminhtruong678@gmail.com",
     role: "admin",
     password: "truong123",
+    refreshToken: ''
   },
 
   {
@@ -17,6 +18,8 @@ export const usersData: UserEntity[] = [
     email: "hainam.dev@example.com",
     role: "user",
     password: "nam123",
+    refreshToken: ''
+
   },
 
   {
@@ -26,6 +29,7 @@ export const usersData: UserEntity[] = [
     email: "lethuhang@example.com",
     role: "editor",
     password: "hang123",
+    refreshToken: ''
   },
 
   {
@@ -35,6 +39,7 @@ export const usersData: UserEntity[] = [
     email: "long.pham@example.com",
     role: "user",
     password: "long123",
+    refreshToken: ''
   },
 
   {
@@ -44,6 +49,7 @@ export const usersData: UserEntity[] = [
     email: "buiminhkhoa@example.com",
     role: "admin",
     password: "khoa123",
+    refreshToken: ''
   },
 
   {
@@ -53,5 +59,6 @@ export const usersData: UserEntity[] = [
     email: "uyen.nhi@example.com",
     role: "user",
     password: "nhi123",
+    refreshToken: ''
   },
 ];

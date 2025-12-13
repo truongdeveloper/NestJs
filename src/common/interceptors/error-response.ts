@@ -1,7 +1,4 @@
- 
- 
- 
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+  /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   ArgumentsHost,
   Catch,
@@ -14,7 +11,6 @@ import { Response } from "express";
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
-    console.log(exception);
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
@@ -26,12 +22,10 @@ export class AllExceptionFilter implements ExceptionFilter {
       }
     };
     const status = getStatus(exception);
-
-
     response.status(status).json({
       ok: 0,
-      data: null,
-      error: exception?.response ?? exception,
+      d: null,
+      e: exception?.response ?? exception,
     });
   }
 }
